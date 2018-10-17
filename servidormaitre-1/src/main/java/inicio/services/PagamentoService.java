@@ -6,33 +6,33 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import inicio.modelos.Produto;
-import inicio.repositoris.ProdutoRepository;
+import inicio.modelos.Pagamento;
+import inicio.repositoris.PagamentoRepository;
 
 
 @Service
-public class ProdutoService {
+public class PagamentoService {
 //intercepta a requisição e processa e faz conexaõ entre rest e banco de dados
 	
 	@Autowired
-	private ProdutoRepository repository;
+	private PagamentoRepository repository;
 	
-	public List<Produto> findAll() {
+	public List<Pagamento> findAll() {
 		return repository.findAll();
 	}
 	
-	public Optional<Produto> find(Integer id) {
+	public Optional<Pagamento> find(Integer id) {
 
 			return repository.findById(id);
 
 	}
 
-	public Produto insere(Produto obj) {
+	public Pagamento insere(Pagamento obj) {
 		obj.setId(null);
 		return repository.save(obj);
 	}
 
-	public Produto atualiza(Produto obj) {
+	public Pagamento atualiza(Pagamento obj) {
 		return repository.save(obj);
 	}
 	

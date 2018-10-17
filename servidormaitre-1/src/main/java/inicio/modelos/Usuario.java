@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -27,10 +25,10 @@ public class Usuario implements Serializable {
 	
 	@Column(unique=true)
 	private String email;
+	
 	private Integer tipo;
 	
 	private Boolean ativo;
-	
 	
 
 	public Usuario(Integer id, String nome, String senha, String email, Integer tipo, Boolean ativo) {
@@ -114,5 +112,14 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ", tipo=" + tipo
+				+ ", ativo=" + ativo + "]";
+	}
+	
+	
 
 }

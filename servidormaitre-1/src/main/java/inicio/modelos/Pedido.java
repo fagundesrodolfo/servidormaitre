@@ -1,3 +1,4 @@
+
 package inicio.modelos;
 
 import java.io.Serializable;
@@ -11,35 +12,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class Pedido  implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
 	
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="produto_id")
 	private Produto produto;
 	
 	private Integer quantidade;
 	
-	@JsonIgnore
-	@OneToOne
+	
+	@ManyToOne
 	@JoinColumn(name="usuario_abriu_id")
 	private Usuario usuarioAbriu;
 	
-	@JsonIgnore
-	//@OneToOne
+	@ManyToOne
 	@JoinColumn(name="usuario_fechou_id")
 	private Usuario usuarioFechoi;
 	
-	
+	@OneToOne
+	@JoinColumn(name="pagemento_id")
+	private Pagamento pagamento;
 	
 	private Integer mesa;
 	
@@ -47,12 +47,25 @@ public class Pedido  implements Serializable{
 	private LocalDate horaAbertura; // 
 	private LocalDate horaFechamento; // 
 	
+	
 	public Pedido() {
 	
 	}
 	
-
 	
+	
+	public void setUsuarioAbriu(Usuario usuarioAbriu) {
+		this.usuarioAbriu = usuarioAbriu;
+	}
+
+
+
+	public void setHoraAbertura(LocalDate horaAbertura) {
+		this.horaAbertura = horaAbertura;
+	}
+
+
+
 	public Pedido(Integer id, Produto produto, Integer quantidade, Usuario usuarioAbriu, Integer mesa) {
 		super();
 		this.id = id;
@@ -61,6 +74,18 @@ public class Pedido  implements Serializable{
 		this.usuarioAbriu = usuarioAbriu;
 		this.mesa = mesa;
 		horaAbertura = LocalDate.now();
+	}
+
+
+
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
 	}
 
 

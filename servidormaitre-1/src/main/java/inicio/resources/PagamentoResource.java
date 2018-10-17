@@ -13,42 +13,45 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import inicio.modelos.Usuario;
-import inicio.services.UsuarioService;
+import inicio.modelos.Pagamento;
+import inicio.modelos.Pagamento;
+import inicio.services.PagamentoService;
+import inicio.services.PagamentoService;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioResource {
+@RequestMapping(value="/pagamentos")
+public class PagamentoResource {
+	
 
 	@Autowired
-	private UsuarioService service;
+	private PagamentoService service;
 
-	// get todos os usuarios
+	// get todos os Pagamentos
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Usuario>> getUsuarios() {
-		List<Usuario> lista = service.findAll();
+	public ResponseEntity<List<Pagamento>> getPagamentos() {
+		List<Pagamento> lista = service.findAll();
 		return ResponseEntity.ok(lista);
 
 	}
 
-	// get usuarios por id
+	// get Pagamentos por id
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Optional<Usuario>> find(@PathVariable Integer id) {
-		Optional<Usuario> obj = service.find(id);
+	public ResponseEntity<Optional<Pagamento>> find(@PathVariable Integer id) {
+		Optional<Pagamento> obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	// salva um novo usuario
+	// salva um novo Pagamento
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> inserir(@RequestBody Usuario obj) {
+	public ResponseEntity<Void> inserir(@RequestBody Pagamento obj) {
 		obj = service.insere(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
-	// atualiza usuarios com base no id
+	// atualiza Pagamentos com base no id
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> atualizar(@RequestBody Usuario obj, @PathVariable Integer id) {
+	public ResponseEntity<Void> atualizar(@RequestBody Pagamento obj, @PathVariable Integer id) {
 		try {
 			obj = service.atualiza(obj);
 		} catch (Exception e) {
@@ -58,14 +61,5 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-
-	// get usuarios por id
-	@RequestMapping(value = "/{login}/{senha}", method = RequestMethod.GET)
-	public ResponseEntity<Usuario> verificaUsuario(@PathVariable String login, @PathVariable String senha) {
-		System.out.println("---------------------------");
-		System.out.println("Valores recebidos: " + login + " e " + senha);
-		Usuario obj = service.getPorEmail(login, senha);
-		return ResponseEntity.ok().body(obj);
-	}
 
 }
